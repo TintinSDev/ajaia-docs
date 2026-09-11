@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ajaia Docs 📝
 
-## Getting Started
+A lightweight, full-stack collaborative document editing system built with Next.js 15, Tiptap, Prisma, and Tailwind CSS. Built as an AI-native document management platform supporting rich-text editing, debounced auto-save persistence, client-side file imports, and isolated access sharing.
 
-First, run the development server:
+---
 
-```bash
+## 🚀 Key Features
+
+* **Rich-Text Document Editor:** Full editing capabilities using Tiptap (ProseMirror engine) supporting Bold, Italic, Underline, Headings (H1/H2), Bulleted Lists, and Numbered Lists.
+* **Debounced Auto-Save:** Real-time persistence using debounced HTTP `PATCH` requests (1000ms delay) with explicit status indicators (**Saving...**, **Saved**, **Save error**).
+* **Client-Side File Import:** Fast ingestion of `.txt` and `.md` files directly into document drafts using the browser `FileReader` API.
+* **Granular Access Control & Sharing:** Grant document permissions to team members via email address with strict backend API isolation (401/403 access boundaries).
+* **Simulated Identity Switcher:** Native header dropdown enabling reviewers to instantly test multi-user owner/collaborator flows without registering multiple accounts.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Framework:** Next.js 15 (App Router)
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS
+* **Text Editor Engine:** Tiptap Editor (`@tiptap/react`, `@tiptap/starter-kit`)
+* **ORM & Database:** Prisma ORM with SQLite (Local) / PostgreSQL (Production)
+* **Testing:** Vitest
+
+---
+
+## 📋 Local Setup Instructions
+
+### Prerequisites
+
+Ensure you have the following installed on your machine:
+* **Node.js:** v18.17.0 or higher
+* **npm** or **pnpm** or **yarn**
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/TitinSDev/ajaia-docs.git](https://github.com/TitinSDev/ajaia-docs.git)
+   cd ajaia-docs
+
+1. Install dependencies:
+
+``
+npm install
+``
+## Set up Environment Variables:
+Create a .env file in the project root directory:
+
+Code snippet
+DATABASE_URL="file:./dev.db"
+Initialize Database Schema & Seed Data:
+Run Prisma migrations and seed default test users (alice@ajaia.com, bob@ajaia.com):
+
+Bash
+npx prisma db push
+Start the Development Server:
+
+Bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open http://localhost:3000 in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# 🧪 Running Automated Tests
+Run the Vitest test suite to verify route protection, missing header handling (401), and access boundaries (403):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Bash
+npm run test
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 👤 Test Credentials & User Roles
+To review document sharing workflows without registering external emails:
 
-## Learn More
+Use the Simulate Identity dropdown in the top navigation bar.
 
-To learn more about Next.js, take a look at the following resources:
+Switch between seeded user accounts:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Alice (Document Owner): alice@ajaia.com
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Bob (Collaborator): bob@ajaia.com
 
-## Deploy on Vercel
+# 📁 Project Structure
+├── app/
+│   ├── api/
+│   │   └── documents/
+│   │       ├── route.ts                 # List/Create Documents
+│   │       └── [id]/
+│   │           ├── route.ts             # Fetch/Update Document Content
+│   │           └── share/
+│   │               └── route.ts         # Document Sharing Handler
+│   ├── documents/
+│   │   └── [id]/page.tsx                # Editor View
+│   └── page.tsx                         # Main Dashboard
+├── components/
+│   ├── Editor.tsx                       # Tiptap Rich-Text Editor Component
+│   ├── Navbar.tsx                       # Navigation & Identity Switcher
+│   ├── ShareModal.tsx                   # Sharing Modal Component
+│   └── ImportModal.tsx                  # File Upload/Import Modal
+├── prisma/
+│   └── schema.prisma                    # Database Models (User, Document, DocShare)
+├── __tests__/
+│   └── access.test.ts                   # Vitest Route Protection Tests
+├── ARCHITECTURE.md                      # Architecture & Technical Tradeoffs
+├── AI_WORKFLOW.md                       # AI Tools Usage & Engineering Decisions
+└── SUBMISSION.md                        # Final Submission Manifest
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# 📝 License
+This project is open-source and available under the MIT License
