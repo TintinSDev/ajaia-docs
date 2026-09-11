@@ -43,23 +43,28 @@ Ensure you have the following installed on your machine:
 1. Install dependencies:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 ## Set up Environment Variables:
 Create a .env file in the project root directory:
 
 Code snippet
+```bash
 DATABASE_URL="file:./dev.db"
 Initialize Database Schema & Seed Data:
 Run Prisma migrations and seed default test users (alice@ajaia.com, bob@ajaia.com):
-
-```bash
-    npx prisma db push
-    Start the Development Server:
 ```
 
 ```bash
+    npx prisma db push
+    npx prisma db seed
+```
+
+
+ # Start the Development Server:
+```bash
 npm run dev
+
 Open http://localhost:3000 in your browser.
 ```
 # 🧪 Running Automated Tests
