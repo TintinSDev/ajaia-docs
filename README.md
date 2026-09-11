@@ -53,20 +53,21 @@ DATABASE_URL="file:./dev.db"
 Initialize Database Schema & Seed Data:
 Run Prisma migrations and seed default test users (alice@ajaia.com, bob@ajaia.com):
 
-Bash
-npx prisma db push
-Start the Development Server:
+``
+    npx prisma db push
+    Start the Development Server:
+``
 
-Bash
+``
 npm run dev
 Open http://localhost:3000 in your browser.
-
+``
 # 🧪 Running Automated Tests
 Run the Vitest test suite to verify route protection, missing header handling (401), and access boundaries (403):
 
-Bash
+``
 npm run test
-
+``
 # 👤 Test Credentials & User Roles
 To review document sharing workflows without registering external emails:
 
@@ -79,6 +80,7 @@ Alice (Document Owner): alice@ajaia.com
 Bob (Collaborator): bob@ajaia.com
 
 # 📁 Project Structure
+``
 ├── app/
 │   ├── api/
 │   │   └── documents/
@@ -102,6 +104,6 @@ Bob (Collaborator): bob@ajaia.com
 ├── ARCHITECTURE.md                      # Architecture & Technical Tradeoffs
 ├── AI_WORKFLOW.md                       # AI Tools Usage & Engineering Decisions
 └── SUBMISSION.md                        # Final Submission Manifest
-
+``
 # 📝 License
 This project is open-source and available under the MIT License
