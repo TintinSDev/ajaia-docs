@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma db push && next build",
+    "build": "prisma db push && prisma db seed && next build",
     "start": "next start",
-    "lint": "next lint",
-    "test": "vitest run"
+    "lint": "eslint",
+    "test": "vitest"
   },
   "dependencies": {
     "@tiptap/extension-underline": "^3.31.3",
