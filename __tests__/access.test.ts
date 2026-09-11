@@ -26,7 +26,7 @@ describe("Document Access Control API", () => {
     const req = new NextRequest(
       `http://localhost:3000/api/documents/${mockDocId}`,
     );
-    const res = await GET(req, { params: { id: mockDocId } });
+    const res = await GET(req, { params: Promise.resolve({ id: mockDocId }) });
 
     expect(res.status).toBe(401);
     const data = await res.json();
@@ -48,7 +48,7 @@ describe("Document Access Control API", () => {
       },
     );
 
-    const res = await GET(req, { params: { id: mockDocId } });
+    const res = await GET(req, { params: Promise.resolve({ id: mockDocId }) });
 
     expect(res.status).toBe(403);
     const data = await res.json();
@@ -73,7 +73,7 @@ describe("Document Access Control API", () => {
       },
     );
 
-    const res = await GET(req, { params: { id: mockDocId } });
+    const res = await GET(req, { params: Promise.resolve({ id: mockDocId }) });
 
     expect(res.status).toBe(200);
     const data = await res.json();
@@ -99,7 +99,9 @@ describe("Document Access Control API", () => {
       },
     );
 
-    const res = await PATCH(req, { params: { id: mockDocId } });
+    const res = await PATCH(req, {
+      params: Promise.resolve({ id: mockDocId }),
+    });
 
     expect(res.status).toBe(403);
     expect(prisma.document.update).not.toHaveBeenCalled();

@@ -25,20 +25,48 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const { id } = await params;
-  const userId = request.headers.get("x-user-id"); // or your session check
+  try {
+    const { id: documentId } = await params;
+    const userId = request.headers.get("x-user-id");
 
-  if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // 1. Fetch document with share relations
+    const document = await prisma.document.findUnique({
+      where: { id: documentId },
+      include: {
+        shares: true,
+      },
+    });
+
+    if (!document) {
+      return NextResponse.json(
+        { error: "Document not found" },
+        { status: 404 },
+      );
+    }
+
+    // 2. Check ownership or shared access
+    const isOwner = document.ownerId === userId;
+    const isShared = document.shares?.some((share) => share.userId === userId);
+
+    if (!isOwner && !isShared) {
+      return NextResponse.json(
+        { error: "Forbidden: Access denied" },
+        { status: 403 },
+      );
+    }
+
+    return NextResponse.json(document, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
-
-  const { doc, hasAccess } = await checkAccess(id, userId);
-
-  if (!doc) {
-    return NextResponse.json({ error: "Document not found" }, { status: 404 });
-  }
-
-  return NextResponse.json(doc);
 }
 
 // PATCH /api/documents/[id] - Auto-save title and content

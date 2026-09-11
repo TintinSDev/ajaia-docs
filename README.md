@@ -66,7 +66,7 @@ Open http://localhost:3000 in your browser.
 Run the Vitest test suite to verify route protection, missing header handling (401), and access boundaries (403):
 
 ```bash
-npm run test
+npm vitest run
 ```
 # 👤 Test Credentials & User Roles
 To review document sharing workflows without registering external emails:
