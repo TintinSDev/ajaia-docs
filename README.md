@@ -80,7 +80,7 @@ Alice (Document Owner): alice@ajaia.com
 Bob (Collaborator): bob@ajaia.com
 
 # 📁 Project Structure
-``
+```bash
 ├── app/
 │   ├── api/
 │   │   └── documents/
@@ -104,6 +104,6 @@ Bob (Collaborator): bob@ajaia.com
 ├── ARCHITECTURE.md                      # Architecture & Technical Tradeoffs
 ├── AI_WORKFLOW.md                       # AI Tools Usage & Engineering Decisions
 └── SUBMISSION.md                        # Final Submission Manifest
-``
+```
 # 📝 License
 This project is open-source and available under the MIT License
